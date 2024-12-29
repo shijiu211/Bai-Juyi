@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>白居易</title>
+	<link rel="stylesheet" href="./css/登录界面.css" />
+	<link rel="stylesheet" href="css/base.css" />
+	<link rel="stylesheet" href="../first_object/js/登录界面.js" />
+</head>
+
+<body>
+	<div id="trail-container"></div>
+	<div class="left_jt">
+		<img class="left_jt" src="./img/left_jt.png" alt="">
+	</div>
+	<div class="right_jt">
+		<img class="right_jt" src="./img/right_jt.png" alt="">
+	</div>
+	<div class="Login">
+		<div class="Login_left">
+			<img src="./img/Login_left_img_1.jpg" alt="">
+			<ul class="slider-indicator">
+				<li class="active"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+		<div class="Login_right">
+			<form action="#" method="post">
+				<h1>白居易<br />Baijuyi</h1>
+				<input class="userinfo" type="text" placeholder="用户/邮箱/手机号" />
+				<input class="password" type="password" placeholder="请输入密码" />
+				<a><input class="button" type="button" value="登  录" /></a>
+			</form>
+			<div class="Login_help">
+				<a class="enroll" href="#">注册账号</a>
+				<a class="lxy" href="#">2025新年快乐</a>
+				<a class="forgot" href="#">忘记密码</a>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+
+	// 获取DOM树对象
+	let enroll = document.querySelector(".enroll")
+	let forgot = document.querySelector(".forgot")
+	let Login_left = document.querySelector(".Login_left")
+	let img = document.querySelector(".Login_left img")
+	let right_jt_img = document.querySelector(".right_jt img")
+	let left_jt_img = document.querySelector(".left_jt img")
+	let button = document.querySelector(".button")
+	let lxy = document.querySelector(".lxy")
+	// 初始定时器图片和小圆点都要跟着变化
+	let i = 1
+	let sliderIndicator = document.querySelectorAll(".slider-indicator li")
+	let Carousel = setInterval(function () {
+		i++
+		if (i > 5) {
+			i = 1
+		}
+		img.src = `./img/Login_left_img_${i}.jpg`
+		for (let k = 0; k < sliderIndicator.length; k++) {
+			sliderIndicator[k].classList.remove("active")
+		}
+		sliderIndicator[i - 1].classList.add("active")
+	}, 2000)
+
+
+	// 定义关闭定时器，触发事件
+	Login_left.addEventListener("mouseenter", function () {
+		clearInterval(Carousel)
+	})
+	// 定义打开定时器，触发事件
+	Login_left.addEventListener("mouseleave", function () {
+		Carousel = setInterval(function () {
+			i++
+			if (i > 5) {
+				i = 1
+			}
+			img.src = `./img/Login_left_img_${i}.jpg`
+			for (let k = 0; k < sliderIndicator.length; k++) {
+				sliderIndicator[k].classList.remove("active")
+			}
+			sliderIndicator[i - 1].classList.add("active")
+		}, 2000)
+	})
+
+	// 定义鼠标移入，触发事件，显示箭头图片
+	right_jt_img.addEventListener("mouseenter", function () {
+		right_jt_img.style.display = "block"
+		left_jt_img.style.display = "block"
+		clearInterval(Carousel)
+	})
+	left_jt_img.addEventListener("mouseenter", function () {
+		right_jt_img.style.display = "block"
+		left_jt_img.style.display = "block"
+		clearInterval(Carousel)
+	})
+	// 定义鼠标移入，触发事件，显示箭头图片
+	Login_left.addEventListener("mouseenter", function () {
+		right_jt_img.style.display = "block"
+		left_jt_img.style.display = "block"
+	})
+	Login_left.addEventListener("mouseleave", function () {
+		right_jt_img.style.display = "none"
+		left_jt_img.style.display = "none"
+	})
+	// 定义点击忘记密码，触发事件
+	forgot.addEventListener("click", function () {
+		window.location.href = "../first_object/注册页面.html"
+	})
+	// 定义点击注册账号，触发事件
+	enroll.addEventListener("click", function () {
+		window.location.href = "../first_object/注册页面.html"
+	})
+	// 定义点击小圆点，触发事件，小圆点高亮
+	for (let j = 0; j < sliderIndicator.length; j++) {
+		sliderIndicator[j].addEventListener("click", function () {
+			img.src = `./img/Login_left_img_${j + 1}.jpg`
+			for (let k = 0; k < sliderIndicator.length; k++) {
+				sliderIndicator[k].classList.remove("active")
+			}
+			sliderIndicator[j].classList.add("active")
+			i = j + 1
+		})
+	}
+	// 定义点击右箭头，触发事件
+	right_jt_img.addEventListener("click", function () {
+		i++
+		if (i > 5) {
+			i = 1
+		}
+		img.src = `./img/Login_left_img_${i}.jpg`
+		for (let k = 0; k < sliderIndicator.length; k++) {
+			sliderIndicator[k].classList.remove("active")
+		}
+		sliderIndicator[i - 1].classList.add("active")
+	})
+	// 定义点击左箭头，触发事件
+	left_jt_img.addEventListener("click", function () {
+		i--
+		if (i < 1) {
+			i = 5
+		}
+		img.src = `./img/Login_left_img_${i}.jpg`
+		for (let k = 0; k < sliderIndicator.length; k++) {
+			sliderIndicator[k].classList.remove("active")
+		}
+		sliderIndicator[i - 1].classList.add("active")
+	})
+
+	// 定义点击登录，触发事件
+	button.addEventListener("click", function () {
+		let userinfo = document.querySelector(".userinfo").value;
+		let password = document.querySelector(".password").value;
+		// 验证账号和密码是否正确
+		if (userinfo === "wjk" && password === "666") {
+			window.location.href = "../first_object/首页.html";
+		} else {
+			alert("账号或密码错误，请重新输入！");
+		}
+	})
+	// 定义键盘ENTER登录，触发事件
+	document.addEventListener("keydown", function (event) {
+		if (event.keyCode === 13) {
+			let userinfo = document.querySelector(".userinfo").value;
+			let password = document.querySelector(".password").value;
+			// 验证账号和密码是否正确
+			if (userinfo === "wjk" && password === "666") {
+				window.location.href = "../first_object/首页.html";
+			} else {
+				alert("账号或密码错误，请重新输入！");
+			}
+		}
+	})
+	// 定义点击流星雨，触发事件
+	lxy.addEventListener("click", function () {
+		window.location.href = "../first_object/2025新年快乐.html"
+	})
+
+
+	// 鼠标拖尾效果
+	document.addEventListener('DOMContentLoaded', () => {
+		const trailContainer = document.getElementById('trail-container');
+		const particles = [];
+		let lastParticleTime = 0; // 用于记录上次生成粒子的时间
+
+		document.addEventListener('mousemove', (e) => {
+			const now = Date.now();
+			if (now - lastParticleTime > 50) { // 控制生成频率
+				createParticle(e.clientX, e.clientY);
+				lastParticleTime = now;
+			}
+		});
+
+		function createParticle(x, y) {
+			const particle = document.createElement('img');
+			particle.src = './img/shuimotexiao(dan).png'; // 使用透明背景图片
+			particle.classList.add('particle');
+			particle.style.left = `${x - 5}px`;
+			particle.style.top = `${y - 5}px`;
+			trailContainer.appendChild(particle);
+			particles.push(particle);
+
+			setTimeout(() => {
+				particle.classList.add('fade');
+				particle.addEventListener('animationend', () => {
+					particle.remove();
+					particles.splice(particles.indexOf(particle), 1);
+				});
+			}, 100); // 迅速开始淡出
+		}
+
+		setInterval(() => {
+			particles.forEach((particle) => {
+				if (particle.classList.contains('fade')) {
+					particle.remove();
+					particles.splice(particles.indexOf(particle), 1);
+				}
+			});
+		}, 1000);
+
+	});
+</script>
+
+</html>

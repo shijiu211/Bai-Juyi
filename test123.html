@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>经典之作</title>
+  <link rel="stylesheet" href="css/经典之作.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="iconfont/font_fangdajin/iconfont.css" />
+</head>
+
+<body>
+  <div id="trail-container"></div>
+  <!-- 快捷导航模块开始 -->
+  <div class="shortcut">
+    <div class="w">
+      <div class="LOGO">
+        <img src="./img/d.png" alt="logo" />
+      </div>
+      <div class="Module_classify">
+        <ul>
+          <li><a href="./首页.html">首页</a></li>
+          <li><a href="./杭州刺史.html">杭州刺史</a></li>
+          <li><a href="./杭白政绩.html">杭白政绩</a></li>
+          <li><a href="./经典之作.html">经典之作</a></li>
+          <li><a href="./登录界面.html">登录</a></li>
+        </ul>
+      </div>
+
+      <div class="search">
+        <input type="search" placeholder="获取帮助" />
+        <button><span class="iconfont icon-fangdajing"></span></button>
+      </div>
+    </div>
+  </div>
+  <!-- 快捷导航模块结束 -->
+
+  <!-- 背景＋名字模块制作开始 -->
+  <div class="bglo">
+    <p class="jing">经</p>
+    <p class="dian">典</p>
+    <p class="zhi">之</p>
+    <p class="zuo">作</p>
+  </div>
+  <!-- 背景＋名字模块制作结束 -->
+
+  <!-- main部分制作开始 -->
+  <!-- 主体部分 -->
+  <div class="main w">
+    <div class="text w">
+      <h2>作品集</h2>
+    </div>
+    <div class="one w">
+      <div class="image-container" data-id="1">
+        <img src="./img/changhenge.jpg" alt="长恨歌">
+      </div>
+      <div class='shige_one w'>
+        <p>
+          《长恨歌》的中心思想是批评唐玄宗重色误国导致安史之乱，同时又同情唐玄宗和杨贵妃的爱情悲剧，歌颂他们生死不渝的爱情。
+        </p>
+      </div>
+    </div>
+
+    <div class="tow w">
+      <div class="image-container" data-id="2">
+        <img src="./img/pipaxing.jpg" alt="琵琶行">
+      </div>
+      <div class='shige_tow w'>
+        <p>
+          《琵琶行》通过对歌妓琵琶女高超弹奏技艺和不幸人生经历的描述，揭露了封建社会官僚腐败、民生凋敝、人才埋没等不合理现象。
+        </p>
+      </div>
+    </div>
+    <div class="three w">
+      <div class="image-container" data-id="3">
+        <img src="./img/yijiangnan.jpg" alt="忆江南">
+      </div>
+      <div class='shige_three w'>
+        <p>
+          第一首词总写对江南的回忆，作者选择了江花和春水，衬以日出和春天的背景，运用比喻和映衬的手法。
+        </p>
+      </div>
+    </div>
+
+    <!-- 添加大图展示容器 -->
+    <div id="modal" class="hidden">
+      <div id="modal-content">
+        <img id="modal-img" src="" alt="">
+      </div>
+    </div>
+
+    <!-- main部分制作结束 -->
+
+    <!-- 结束部分footer制作开始 -->
+    <div class="w">
+      <footer>
+        <h1>杭州相关名人和古诗</h1>
+        <P>请联系我们<a href="19857979455 ">19857979455</a> | 邮箱地址：<a href="3086547255@qq.com">3086547255@qq.com</a></P>
+        <h3>版权所有&copy
+          浙金院官网
+          人工231王家侃
+          学号2023630113
+        </h3>
+      </footer>
+    </div>
+    <!-- 结束部分footer制作结束 -->
+    <script>
+      // 鼠标拖尾效果
+      document.addEventListener('DOMContentLoaded', () => {
+        const trailContainer = document.getElementById('trail-container');
+        const particles = [];
+        let lastParticleTime = 0; // 用于记录上次生成粒子的时间
+
+        document.addEventListener('mousemove', (e) => {
+          const now = Date.now();
+          if (now - lastParticleTime > 50) { // 控制生成频率
+            createParticle(e.clientX, e.clientY);
+            lastParticleTime = now;
+          }
+        });
+
+        function createParticle(x, y) {
+          const particle = document.createElement('img');
+          particle.src = './img/shuimotexiao(dan).png'; // 使用透明背景图片
+          particle.classList.add('particle');
+          particle.style.left = `${x - 5}px`;
+          particle.style.top = `${y - 5}px`;
+          trailContainer.appendChild(particle);
+          particles.push(particle);
+
+          setTimeout(() => {
+            particle.classList.add('fade');
+            particle.addEventListener('animationend', () => {
+              particle.remove();
+              particles.splice(particles.indexOf(particle), 1);
+            });
+          }, 100); // 迅速开始淡出
+        }
+
+        setInterval(() => {
+          particles.forEach((particle) => {
+            if (particle.classList.contains('fade')) {
+              particle.remove();
+              particles.splice(particles.indexOf(particle), 1);
+            }
+          });
+        }, 1000);
+
+      });
+
+
+
+
+
+
+
+
+      // --------------------
+      document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+
+        // 点击图片打开大图
+        document.querySelectorAll('.image-container img').forEach(img => {
+          img.addEventListener('click', (e) => {
+            modalImg.src = e.target.src;
+            modal.classList.remove('hidden');
+          });
+        });
+
+        // 点击空白处关闭大图
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal || e.target === modalImg) {
+            modal.classList.add('hidden');
+          }
+        });
+      });
+
+    </script>
+</body>
+
+</html>
