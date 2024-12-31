@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>账号注册</title>
+  <link rel="stylesheet" href="./css/注册页面.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="../first_object/js/登录界面.js" />
+</head>
+
+<body>
+  <div id="trail-container"></div>
+  <div class="Login">
+    <div class="Login_left">
+      <img src="./img/白居易.jpg" alt="">
+    </div>
+    <div class="Login_right">
+      <form action="#" method="post">
+        <h1>白居易<br />Baijuyi</h1>
+        <input class="userinfo" type="text" placeholder="手机号" />
+        <input class="password" type="password" placeholder="请输入密码" />
+        <input class="telemnumber" type="password" placeholder="手机号码" />
+        <a><input class="button_1" type="button" value="立 即 注 册" /></a>
+        <a><input class="button_2" type="button" value="返  回" /></a>
+        <input class="tnumber" type="search" placeholder="+ 86">
+        <div class="text">短信验证码</div>
+        <input class="text_password" placeholder="短信验证码"></input>
+        <ul class="result-list">
+          <li>
+            <a href="#">+ 86</a>
+          </li>
+          <li>
+            <a href="#">+ 86</a>
+          </li>
+          <li>
+            <a href="#">+ 852</a>
+          </li>
+          <li>
+            <a href="#">+ 853</a>
+          </li>
+          <li>
+            <a href="#">+ 856</a>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>
+  <script>
+    // 1. 获取元素
+    const userinfo = document.querySelector('.userinfo');
+    const password = document.querySelector('.password');
+    const tnumber = document.querySelector('.tnumber');
+    const telemnumber = document.querySelector('.telemnumber');
+    const resultList = document.querySelector('.result-list');
+    const lis = document.querySelectorAll(".result-list li")
+    const button_1 = document.querySelector('.button_1');
+    const button_2 = document.querySelector('.button_2');
+    const text = document.querySelector('.text');
+    const text_password = document.querySelector('.text_password');
+    // 监听事件 获得焦点时给输入框添加一个带有颜色边框，对应样式类名为search
+    tnumber.addEventListener('focus', function () {
+      this.classList.add('search');
+      resultList.style.display = 'block';
+    });
+
+    // 监听事件 回填数据，当选择不同的列表项时，对应的数据回填到输入框内，同时列表选项消失
+    resultList.addEventListener('click', function (event) {
+      const li = event.target;
+      tnumber.value = li.innerText;
+      resultList.style.display = 'none';
+    })
+
+    // 监听事件,点击立即注册按钮，注册成功后，跳转到登录页面
+    button_1.addEventListener('click', function () {
+      const userinfoValue = userinfo.value;
+      const passwordValue = password.value;
+      const telemnumberValue = telemnumber.value;
+      const tnumberValue = tnumber.value;
+      const text_passwordValue = text_password.value;
+      // 检查手机号码是否符合格式（简单示例，以1开头的11位数字），可根据实际需求完善正则表达式
+      const phoneReg = /^1\d{10}$/;
+      if (userinfoValue && passwordValue && telemnumberValue && tnumberValue && text_passwordValue) {
+        if (phoneReg.test(telemnumberValue)) {
+          localStorage.setItem('username', userinfoValue);
+          localStorage.setItem('password', passwordValue);
+          alert('注册成功!!!');
+          window.location.href = '../first_object/登录界面.html';
+        } else {
+          alert('请输入正确的手机号码！');
+        }
+      } else {
+        alert('请填写所有必填字段！');
+      }
+    });
+    text.addEventListener('click', function () {
+      // 检查 text 是否已经被禁用，如果是，则直接返回
+      if (text.disabled) return;
+
+      let time = 60;
+      let timer = setInterval(function () {
+        time--;
+        text.style.width = '40px';
+        text.style.height = '30px';
+        text.style.lineHeight = '30px';
+        text.pointerEvents = "none";
+        text.disabled = true;
+        text.innerText = time + 's';
+        text.style.top = "-86px";
+        text.style.left = "405px";
+        text_password.style.display = 'block';
+        if (time === 0) {
+          clearInterval(timer);
+          text.innerText = '短信验证码';
+          text.style.width = '70px';
+          text.style.height = '40px';
+          text.style.lineHeight = '40px';
+          text.style.top = "-92px";
+          text.style.left = "405px";
+          // 隐藏短信验证码输入框
+          text_password.style.display = 'none';
+
+        }
+      }, 1000);
+    });
+    // 监听事件，点击返回按钮，页面跳转到登录页面
+    button_2.addEventListener('click', function () {
+      // 页面跳转到登录页面
+      window.location.href = '../first_object/登录界面.html';
+    })
+
+
+    // ------------------------------------
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const trailContainer = document.getElementById('trail-container');
+      const particles = [];
+      let lastParticleTime = 0; // 用于记录上次生成粒子的时间
+
+      document.addEventListener('mousemove', (e) => {
+        const now = Date.now();
+        if (now - lastParticleTime > 50) { // 控制生成频率
+          createParticle(e.clientX, e.clientY);
+          lastParticleTime = now;
+        }
+      });
+
+      function createParticle(x, y) {
+        const particle = document.createElement('img');
+        particle.src = './img/shuimotexiao(dan).png'; // 使用透明背景图片
+        particle.classList.add('particle');
+        particle.style.left = `${x - 5}px`;
+        particle.style.top = `${y - 5}px`;
+        trailContainer.appendChild(particle);
+        particles.push(particle);
+
+        setTimeout(() => {
+          particle.classList.add('fade');
+          particle.addEventListener('animationend', () => {
+            particle.remove();
+            particles.splice(particles.indexOf(particle), 1);
+          });
+        }, 100); // 迅速开始淡出
+      }
+
+      setInterval(() => {
+        particles.forEach((particle) => {
+          if (particle.classList.contains('fade')) {
+            particle.remove();
+            particles.splice(particles.indexOf(particle), 1);
+          }
+        });
+      }, 1000);
+
+    });
+
+  </script>
+</body>
+
+</html>
